@@ -1,22 +1,27 @@
 # Qryptic Documentation
 
 ## 1. Overview
+
 Qryptic is a **Zero Trust Network Access (ZTNA)** solution that provides secure, time-bound access to internal networks and resources. It consists of the following components:
 
 1. **Controller**:
+
    - Manages users, groups, gateways, and access policies.
    - Generates time-bound client configurations for users.
    - Communicates with gateways to enforce access controls.
 
 2. **Gateway**:
+
    - Enforces access controls using WireGuard.
    - Dynamically updates its configuration based on instructions from the Controller.
 
 3. **User**:
+
    - Employees or users who need access to gateways.
    - Admins can manage the Controller and gateways.
 
 4. **Group**:
+
    - A collection of users (e.g., a team) with shared access to gateways.
 
 5. **Client**:
@@ -28,23 +33,29 @@ Qryptic is a **Zero Trust Network Access (ZTNA)** solution that provides secure,
 ## 2. Architecture
 
 ### High-Level Architecture
+
 ![Qryptic Architecture Diagram](./images/architecture.png)
+![High Level](./images/highlevel.jpeg)
 
 1. **Controller**:
+
    - Hosted on a private EC2 instance (AWS) or Kubernetes cluster.
    - Manages users, groups, and gateways.
    - Generates time-bound client configurations.
 
 2. **Gateway**:
+
    - Hosted on a public EC2 instance (AWS) with a public IP.
    - Enforces access controls using WireGuard.
    - Communicates with the Controller via HTTPS.
 
 3. **User**:
+
    - Connects to the Gateway using the Qryptic CLI or mobile/desktop apps.
    - Uses time-bound client configurations provided by the Controller.
 
 4. **Database**:
+
    - PostgreSQL database (AWS RDS) for storing user, group, and gateway data.
 
 5. **Load Balancer**:
@@ -56,6 +67,7 @@ Qryptic is a **Zero Trust Network Access (ZTNA)** solution that provides secure,
 ## 3. Setup Guide
 
 ### 3.1. Prerequisites
+
 - AWS account with permissions to create EC2 instances, RDS, ALB, and Route53.
 - Docker installed on EC2 instances.
 - Custom domain (e.g., `qryptic.example.com`).
@@ -63,20 +75,25 @@ Qryptic is a **Zero Trust Network Access (ZTNA)** solution that provides secure,
 ### 3.2. Deploy the Controller
 
 #### Step 1: Create an RDS PostgreSQL Database
+
 [AWS Reference](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html)
 
 #### Step 2: Set Up Route53, ALB, and Target Group
+
 1. **Route53**:
+
    - Go to the **Route53 Dashboard**.
    - Create a hosted zone for your domain (e.g., `qryptic.example.com`).
    - Add an **A record** pointing to the ALB.
 
 2. **ACM Certificate**:
+
    - Go to the **ACM Dashboard**.
    - Request a public certificate for your domain (e.g., `qryptic.example.com`).
    - Validate the certificate using DNS validation.
 
 3. **ALB**:
+
    - Go to the **EC2 Dashboard** > **Load Balancers**.
    - Click **Create Load Balancer** and choose **Application Load Balancer**.
    - Configure the ALB:
@@ -94,6 +111,7 @@ Qryptic is a **Zero Trust Network Access (ZTNA)** solution that provides secure,
      - Create a new target group (`qryptic-controller-tg`) with port `8080`.
 
 4. **Target Group**:
+
    - Go to the **Target Groups** section in the EC2 Dashboard.
    - Register the Controller EC2 instance as a target.
 
@@ -102,7 +120,9 @@ Qryptic is a **Zero Trust Network Access (ZTNA)** solution that provides secure,
    - Add a rule to the port `80` listener to redirect all traffic to port `443`.
 
 #### Step 3: Deploy the Controller EC2 Instance
+
 1. **Launch an EC2 Instance**:
+
    - Go to the **EC2 Dashboard**.
    - Click **Launch Instance**.
    - Configure the instance:
@@ -116,6 +136,7 @@ Qryptic is a **Zero Trust Network Access (ZTNA)** solution that provides secure,
    - Click **Launch**.
 
 2. **Install Docker**:
+
    - SSH into the EC2 instance.
    - Run the following commands to install Docker:
      ```bash
@@ -144,7 +165,9 @@ Qryptic is a **Zero Trust Network Access (ZTNA)** solution that provides secure,
 ---
 
 ### 3.3. Deploy the Gateway
+
 #### Step 1: Launch an EC2 Instance for the Gateway
+
 1. Go to the **EC2 Dashboard** and click **Launch Instance**.
 2. Configure the instance:
    - **AMI**: Amazon Linux 2 or Ubuntu 22.04 LTS.
@@ -159,7 +182,9 @@ Qryptic is a **Zero Trust Network Access (ZTNA)** solution that provides secure,
 3. Setup Route53, ALB and Target Group for gateway too similar to controller
 
 #### Step 2: Install Docker and Run the Gateway
+
 1. **Install Docker**:
+
    - SSH into the EC2 instance.
    - Run the following commands to install Docker:
      ```bash
@@ -192,7 +217,9 @@ Qryptic is a **Zero Trust Network Access (ZTNA)** solution that provides secure,
 ## 4. Usage
 
 ### 4.1. CLI Tool
+
 1. **Install the Qryptic CLI**:
+
    - Download the latest version from [GitHub Releases](https://github.com/leetsecure/qryptic-cli/releases).
    - Install it on your local machine.
    - For macOS
@@ -206,13 +233,12 @@ Qryptic is a **Zero Trust Network Access (ZTNA)** solution that provides secure,
    ```bash
    qryptic login -u <controller url>
    ```
-   
 3. **Connect to a Gateway**:
    ```bash
    qryptic connect
    ```
-   
 4. **Current Status**:
+
    ```bash
    qryptic status
    ```
@@ -221,11 +247,11 @@ Qryptic is a **Zero Trust Network Access (ZTNA)** solution that provides secure,
    ```bash
    qryptic disconnect
    ```
-   
 6. **Log out from controller**:
    ```bash
    qryptic logout
    ```
 
 ## 5. License
+
 Qryptic is licensed under the [AGPL-3.0 license](./LICENSE).
