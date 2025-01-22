@@ -2,7 +2,45 @@
 
 ## 1. Overview
 
-Qryptic is a **Zero Trust Network Access (ZTNA)** solution that provides secure, time-bound access to internal networks and resources. It consists of the following components:
+Qryptic is a modern, open-source **Zero Trust Network Access (ZTNA)** solution powered by **WireGuard**, providing secure, fast, reliable and time-bound network access management. Unlike traditional VPNs, ZTNA ensures that users only access the specific resources they need, minimizing security risks and improving overall control.
+
+### 🚀 Why ZTNA and Qryptic?
+
+**ZTNA** is a modern and secure alternative to VPNs. Traditional VPNs grant broad network access, often leading to security risks and compliance challenges. ZTNA takes a different approach by ensuring least-privilege access and enforcing security policies at every step.
+
+However, many ZTNA solutions present challenges such as:
+
+- **Infrastructure Control:**  
+  Does your ZTNA solution place all the controls within your own infrastructure (data center or cloud), or is the main controlling interface managed by the vendor?  
+  Qryptic ensures **you** have full control over your infrastructure.
+
+- **Public Exposure of Internal Tools:**  
+  Are internally hosted third-party tools exposed to the public even when needed by only a few teams?  
+  Qryptic helps segment and control access efficiently.
+
+- **Data Residency & Compliance Challenges:**  
+  Are you struggling with regulatory requirements related to **data residency and localization**?  
+  Qryptic is designed to meet compliance needs by allowing self-hosting within your environment.
+
+- **Cost of Adoption:**  
+  Is onboarding a ZTNA solution too costly for your growing startup?  
+  Qryptic provides an **affordable, self-hosted** alternative without recurring costs.
+
+- **One VPN for All?**  
+  Does your team rely on a **single VPN** to access internal services, leading to bottlenecks and security risks?  
+  With Qryptic, you can manage **multiple VPNs** for different use cases from a single interface.
+
+### 🔑 What Makes Qryptic Different?
+
+Qryptic offers:
+
+✅ **End-to-End Hosting:** Host the entire solution within your infrastructure, ensuring full control over data and security policies.  
+✅ **Multi-VPN Management:** Manage multiple VPNs for different use cases via a centralized interface.  
+✅ **WireGuard-Powered Security:** Benefit from WireGuard’s robust encryption and high-speed performance.  
+✅ **Open Source Flexibility:** Customize and extend the solution to meet your specific business needs.  
+✅ **Compliance-Focused:** Stay compliant with evolving regulatory requirements without vendor lock-in.
+
+It consists of the following components:
 
 1. **Controller**:
 
